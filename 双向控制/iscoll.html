@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="js/zepto.js"></script>
+		<script src="js/iscroll-probe.js"></script>
+		<title></title>
+		<style>
+			
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				
+			}
+			html,body,#box{
+				height:100%;
+			}
+			header,footer{
+				height:40px;
+				line-height: 40px;;text-align: center;
+				border: 1px solid green;
+				background: green;
+			}
+			
+			#box{
+				display:flex ;
+				flex-direction: column;
+				background: darkgray;
+			}
+			
+			
+			#main{
+				overflow: hidden;
+				height:300px;
+				flex-grow: 1;
+			}
+			
+			#main li{
+				border: 1px solid red;
+				line-height: 40px;
+				text-align: center;
+				background: white;
+			}
+			
+			#main p{
+				height:30px;
+				line-height: 30px;
+				text-align: center;
+				display: none;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="box">
+		<header>头部</header>
+		
+		<div id="main">
+			<div>
+			<p>下拉刷新。。。。</p>
+			<ul>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				
+				<li>111111</li>
+				<li>111111</li>
+				
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+				<li>111111</li>
+			</ul>
+			</div>
+		</div>
+		
+		
+		<footer>底部</footer>
+		</div>
+		
+		
+		
+		
+		<script>
+			
+			var mys;
+			
+			var flag=0;  
+			//0 不满足      1  满足下拉       2   上拉
+			function load(){
+				
+			setTimeout(function(){
+				
+				
+			 mys=new IScroll("#main",{
+			 probeType:3
+		
+			 })
+			
+			var n=0;
+		mys.on("scroll",function(){
+			
+			if(this.y>100){
+				flag=1;
+				$("p").show();
+			}
+			
+			n++;
+			
+		})
+			
+			
+			
+		//结束	
+		mys.on("scrollEnd",function(){
+			
+			if(flag==1){
+			
+				$("p").html("正在加载。。。。。")
+				
+			setTimeout(function(){
+				$("p").hide();
+					   		
+	   		$("P").html("松开加载。。。");
+	   	
+			$("<li>00000000000</li>").prependTo("#main ul");
+			
+			flag=0;
+		
+			mys.refresh();
+
+				
+				
+			},200)
+			
+				
+				
+				
+			}
+			
+			
+			
+			
+		})
+			
+			
+			
+			
+			
+			
+			},200)	
+			}
+	
+		window.onload=function(){
+			load();
+		}
+		
+		
+		
+		</script>
+		
+		
+		
+		
+		
+		
+		
+	</body>
+</html>

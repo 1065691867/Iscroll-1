@@ -1,0 +1,255 @@
+一。滚动
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<script src="js/iscroll.js"></script>
+		<title></title>
+		
+		<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			
+		}
+		
+		html,body,#box{
+			height:50%;
+			
+		}
+		
+		#box{
+			overflow: hidden;
+			
+		}
+		
+		.a1{
+			height:100%;
+		}
+		
+		#box li{
+			height:30px;
+			text-align: center;
+			line-height: 30px;
+			border: 1px solid green;
+			
+			
+		}
+		
+		
+		</style>
+	</head>
+	<body>
+		
+		<div id="box">
+			<ul id="a1">
+				
+			</ul>
+			<p>123</p>
+		</div>
+		
+		<script>
+		
+		
+			for(var i=0;i<50;i++){
+			   var li=document.createElement("li");
+			   
+			   li.innerHTML=i;
+			   a1.appendChild(li);
+			   
+			}
+			
+			var iscroll=new IScroll("#box");
+			
+			
+		</script>
+		
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+二。下拉刷新
+
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+
+		<style>
+			*{
+				margin:0;
+				padding: 0;
+				list-style: none;
+			}
+			/*必须*/
+			html,body,#box{
+				height:100%;  
+			}
+			
+			#box{
+				height:100%;
+				display: flex;
+				flex-direction: column;
+			}
+			header,footer{
+				height:50px;
+				line-height: 50px;
+				background: #000;
+				color:#fff;
+				text-align: center;
+			}
+			
+			#main{
+				flex-grow: 1;
+				overflow: hidden;
+				background: #f1f1f1;
+			}
+			#main li{
+				line-height: 40px;
+				text-align:  center;
+				border:1px dashed darkblue;
+				background: #fff;
+			}
+	        #main p{
+	        	height:60px;
+	        	line-height: 60px;
+	        	text-align: center;
+	        	display: none;
+	        	
+	        }
+		</style>
+	</head>
+	<body>
+		
+		<div id="box">
+			 <!--头部-->
+			 <header>头部</header>
+			 <div id="main">
+			 	<div>
+				 	<p>松开加载。。。</p>
+				 	<ul>			 		
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 		<li>12312313</li>
+				 	</ul>
+			 	</div>
+			 </div>
+			 <footer>底部</footer>		
+		</div>
+		<script src="js/zepto.js"></script>
+	<!--	<script src="js/iscroll.js"></script>-->
+		<script src="js/iscroll-probe.js"></script>
+		<script>
+		var myIs;
+		var flag = 0;  // flag 指令  0 代表不满足条件   1代表满足下拉条件    2满足上拉条件
+		function loaded(){
+			setTimeout(function(){
+				//
+				myIs = new IScroll("#main",{
+					//滚动中触发  每滚动一像素触发一次  scroll
+					probeType:3
+				})
+				//滚动中触发
+				var n = 0
+				myIs.on("scroll",function(){
+					//this.y  当前位置   临界点 100
+					//console.log(this.y)
+					if(this.y>100){
+						//console.log(n)
+						flag = 1
+						//让p显示
+						$("p").show();
+					}
+					n++
+				})
+				//滚动结束之后添加dom
+				myIs.on("scrollEnd",function(){			
+					//满足上拉条件
+					if(flag == 1){
+						//改变p标签内容
+					   $("p").html("正在加载请稍后。。。。");			   
+					   //设置一次性计时器
+					   setTimeout(function(){
+					   		//隐藏p标签
+					   		$("p").hide();
+					   		//
+					   		$("P").html("松开加载。。。");
+					   		//添加dom
+							$("<li>00000000000</li>").prependTo("#main ul");
+							//初始化指令
+							flag=0;
+							//刷新
+							myIs.refresh();
+					   },2000)
+						
+					}
+				
+				//	$("li").html(1)
+				})
+										
+			},200)
+		}
+		
+		
+			
+		//
+		window.onload=function(){
+			loaded();
+		}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+

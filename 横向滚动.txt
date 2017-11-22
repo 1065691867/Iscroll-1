@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="js/iscroll.js"></script>
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			#a1 {
+				height:50px;
+				border:1px solid red;
+				overflow: hidden;
+			}
+			#a1 ul{
+				display: flex;
+				width:200%;
+			}
+			#a1 li{
+				flex-grow: 1;
+				display: flex;
+				line-height: 40px;
+				height:40px;
+				border: 1px solid green;
+			}
+			
+		</style>
+	</head>
+	<body>
+		
+		<div id="a1">
+			<ul>
+				<li>11</li>
+				<li>22</li>
+				<li>33</li>
+				<li>44</li>
+				<li>55</li>
+			</ul>
+				
+		</div>
+		
+		
+		<script>
+		      var iscroll;
+			function load(){
+				setTimeout(function(){
+					iscroll=new IScroll("#a1",{
+						scrollX:true,
+					})
+				},200)
+			}
+			
+			window.onload=function(){
+				load();
+			}
+			
+		</script>
+	</body>
+</html>
